@@ -16093,7 +16093,7 @@ MonoBehaviour:
   ballSpeedText: {fileID: 518278794}
   homebase: {fileID: 467722102}
   run: 1
-  controll: 50
+  controll: 100
   stamina: 100
   isRandom: 0
   Balls:
