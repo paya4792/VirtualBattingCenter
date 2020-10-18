@@ -140,6 +140,16 @@ public class ThrowBall : MonoBehaviour
         }
     }
 
+    public void OnBallHomeruned()
+    {
+        if (isHitted)
+        {
+            isHitted = false;
+            catcher.OnHitted();
+            bso.AddBSO('H');
+        }
+    }
+
     public void OnBallCatched()
     {
         isHitted = false;

@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.testmr.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\amda8\\Documents\\TestMR\\actions.json",
+      "action_manifest_path": "C:\\Users\\amda8\\Documents\\VirtualBattingCenter\\actions.json",
       "strings": {
         "en_us": {
           "name": "TestMR [Testing]"
