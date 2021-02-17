@@ -20,7 +20,6 @@ public class HRCount : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     public void ITSGONE()
     { 
         homerun++;

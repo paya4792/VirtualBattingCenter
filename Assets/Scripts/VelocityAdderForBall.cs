@@ -12,13 +12,13 @@ public class VelocityAdderForBall : MonoBehaviour
     [System.NonSerialized]
     public float _vy;
 
-    [Header("ボールのリグ")]
-    public Rigidbody _rigidbody;
+    // リジッドボディ
+    private Rigidbody _rigidbody;
 
-    [Header("ボールのコライダー")]
-    public SphereCollider _sphereCollider;
+    // コライダー
+    private SphereCollider _sphereCollider;
 
-    // 変化球
+    // 変化
     private Vector3 _velocity;
 
     // ボールが投げられてからの時間
@@ -27,17 +27,43 @@ public class VelocityAdderForBall : MonoBehaviour
     // ボールの到達時間
     private float _arrivalTime = 0.0f;
 
+    // ボールが投げられたか
+    private bool _pitched = false;
+
     // ボールがなにかに衝突したか
     private bool _collided = false;
+
+    private TrailRenderer trailRenderer;
+
+    public void SetRigidbody(Rigidbody rigidbody)
+    {
+        _rigidbody = rigidbody;
+    }
+
+    public void SetSphereCollider(SphereCollider sphereCollider)
+    {
+        _sphereCollider = sphereCollider;
+    }
+
+    public void SetVelocity(float arrivalTime)
+    {
+        _arrivalTime = arrivalTime;
+        _velocity.x = _vx;
+        _velocity.y = _vy;
+        _pitched = true;
+        _collided = false;
+        _timer = 0.0f;
+    }
+
+    public void SetTrailRenderer(TrailRenderer trail)
+    {
+        trailRenderer = trail;
+        trailRenderer.enabled = false;
+    }
 
     void Update()
     {
         _timer += Time.deltaTime * 1.0f;
-
-        if (_timer >= 20.0f)
-        {
-            Destroy(this.gameObject);
-        }
     }
 
     private void Start()
@@ -47,7 +73,7 @@ public class VelocityAdderForBall : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_collided)
+        if (!_collided && _pitched)
         {
             AddForce();
         }
@@ -59,20 +85,10 @@ public class VelocityAdderForBall : MonoBehaviour
         _rigidbody.AddForce(_velocity * Mathf.Clamp((_arrivalTime / _timer), 0.0f, 1.0f), ForceMode.Acceleration);
     }
 
-    private void SetVelocity()
-    {
-        _rigidbody.AddForce(_velocity * Mathf.Clamp((_arrivalTime / _timer), 0.0f, 1.0f), ForceMode.Acceleration);
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         _collided = true;
-    }
-
-    public void SetVelocity(float arrivalTime)
-    {
-        _arrivalTime = arrivalTime;
-        _velocity.x = _vx;
-        _velocity.y = _vy;
+        _pitched = false;
+        trailRenderer.enabled = true;
     }
 }
