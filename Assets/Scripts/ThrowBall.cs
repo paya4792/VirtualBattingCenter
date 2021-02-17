@@ -109,7 +109,6 @@ public class ThrowBall : MonoBehaviour
     {
         isHitted = true;
         isGrounded = false;
-        catcher.OnHitted();
     }
 
     public void OnBallGrounded()
@@ -125,7 +124,6 @@ public class ThrowBall : MonoBehaviour
         if (isHitted)
         {
             isHitted = false;
-            catcher.OnHitted();
             bso.AddBSO('F');
         }
     }
@@ -135,7 +133,6 @@ public class ThrowBall : MonoBehaviour
         if (isHitted)
         {
             isHitted = false;
-            catcher.OnHitted();
             bso.AddBSO('H');
         }
     }
@@ -145,7 +142,6 @@ public class ThrowBall : MonoBehaviour
         if (isHitted)
         {
             isHitted = false;
-            catcher.OnHitted();
             bso.AddBSO('H');
         }
     }
@@ -155,7 +151,6 @@ public class ThrowBall : MonoBehaviour
         isHitted = false;
         strike.OnBallCatched();
         strike.ResetBool();
-        catcher.OnHitted();
     }
 
     public void ChangeSpeed(bool change) {
@@ -244,7 +239,6 @@ public class ThrowBall : MonoBehaviour
         ballScript.SetVelocity(arrivalTime);
 
         ballRig.AddForce(force, ForceMode.Impulse);
-        catcher.OnPitch();
     }
 
     public void Running() {

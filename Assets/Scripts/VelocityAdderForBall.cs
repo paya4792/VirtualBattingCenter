@@ -33,6 +33,8 @@ public class VelocityAdderForBall : MonoBehaviour
     // ボールがなにかに衝突したか
     private bool _collided = false;
 
+    private TrailRenderer trailRenderer;
+
     public void SetRigidbody(Rigidbody rigidbody)
     {
         _rigidbody = rigidbody;
@@ -49,8 +51,15 @@ public class VelocityAdderForBall : MonoBehaviour
         _velocity.x = _vx;
         _velocity.y = _vy;
         _pitched = true;
+        _collided = false;
+        _timer = 0.0f;
     }
 
+    public void SetTrailRenderer(TrailRenderer trail)
+    {
+        trailRenderer = trail;
+        trailRenderer.enabled = false;
+    }
 
     void Update()
     {
@@ -79,5 +88,7 @@ public class VelocityAdderForBall : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         _collided = true;
+        _pitched = false;
+        trailRenderer.enabled = true;
     }
 }
