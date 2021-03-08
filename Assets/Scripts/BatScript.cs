@@ -16,15 +16,17 @@ public class BatScript : MonoBehaviour
     private StrikeScript strike;
     private CapsuleCollider capsuleCollider;
     private PhysicMaterial physicMaterial;
+    private bool isStarted = false;
+
+    public float bouncinessMax = 1.0f;
+    public float bouncinessMin = 0.0f;
+    public float bouncinessMultipler = 0.2f;
 
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Ball")
         {
             rig = other.gameObject.GetComponent<Rigidbody>();
-
-            vec.z = Mathf.Clamp(power * rig.mass * speed.z, -5, 5);
-            physicMaterial.bounciness = Mathf.Clamp(vec.z * 0.2f, 0, 1);
 
             if (vec.z > 1) { rig.AddForce(vec, ForceMode.Impulse); }
             else { rig.AddForce(new Vector3(0, 0, -power), ForceMode.VelocityChange); }
@@ -41,12 +43,18 @@ public class BatScript : MonoBehaviour
         physicMaterial = capsuleCollider.material;
         //strikezone = GameObject.Find("StrikeZone");
         //strike = strikezone.GetComponent<StrikeScript>();
+        isStarted = true;
     }
 
     private void Update()
     {
         speed = ((this.transform.position - latestPos) / Time.deltaTime);
         latestPos = this.transform.position;
+        if (isStarted)
+        {
+        vec.z = Mathf.Clamp(power * rig.mass * speed.z, -5, 5);
+        physicMaterial.bounciness = Mathf.Clamp(vec.z * bouncinessMultipler, bouncinessMin, bouncinessMax);
+        }
         //if (speed.z > 3.0f) { strike.isSwinged = true; Debug.Log(speed.z); }
     }
 }
