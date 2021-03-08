@@ -30,9 +30,7 @@ public class BatScript : MonoBehaviour
 
             if (vec.z > 1) { rig.AddForce(vec, ForceMode.Impulse); }
             else { rig.AddForce(new Vector3(0, 0, -power), ForceMode.VelocityChange); }
-            if (vec.z >= 4) Instantiate(particle, transform.position, transform.rotation);
-            //   Debug.Log(vec.z);
-            //   Debug.Log(speed.z);
+            if (vec.z >= 4) { Instantiate(particle, transform.position, transform.rotation); }
             Debug.Log(physicMaterial.bounciness);
         }
     }
@@ -41,8 +39,6 @@ public class BatScript : MonoBehaviour
     {
         capsuleCollider = this.GetComponent<CapsuleCollider>();
         physicMaterial = capsuleCollider.material;
-        //strikezone = GameObject.Find("StrikeZone");
-        //strike = strikezone.GetComponent<StrikeScript>();
         isStarted = true;
     }
 
@@ -50,11 +46,9 @@ public class BatScript : MonoBehaviour
     {
         speed = ((this.transform.position - latestPos) / Time.deltaTime);
         latestPos = this.transform.position;
-        if (isStarted)
-        {
-        vec.z = Mathf.Clamp(power * rig.mass * speed.z, -5, 5);
-        physicMaterial.bounciness = Mathf.Clamp(vec.z * bouncinessMultipler, bouncinessMin, bouncinessMax);
+        if (isStarted) {
+            vec.z = Mathf.Clamp(power * rig.mass * speed.z, -5, 5);
+            physicMaterial.bounciness = Mathf.Clamp(vec.z * bouncinessMultipler, bouncinessMin, bouncinessMax);
         }
-        //if (speed.z > 3.0f) { strike.isSwinged = true; Debug.Log(speed.z); }
     }
 }
